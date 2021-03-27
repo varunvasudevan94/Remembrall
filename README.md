@@ -8,8 +8,8 @@ This App draws inspiration from Harry potter - [Remembrall](https://harrypotter.
 [Video link to find the reference](https://www.youtube.com/watch?v=o4zbeBclAtU). 
 
 # About the App
-The App enables you to take a photo save it on the device. 
-(Yes we don't want your photos or data. Your privacy is of utmost importance!!!!).  
+The App enables you to take a photo save it on the device.  
+(We don't want your photos or data. Your privacy is of utmost importance!!!!).  
 We would periodically send you reminders as to what you are going to forget.  
 
 # Workflow
@@ -20,7 +20,7 @@ ITS A THREE STEP PROCESS
 
 We will send you periodic notifications based on your priorities for the thing you are about to forget
 
-# PLAN
+# Plan
 I am trying out the project primarily to improve my skills for planning and executing. Also to try out new things and solve the problem faced by millions if not billion.  
 
 I'll be adding the enhancements in stages just to checkpoint the progress-  
