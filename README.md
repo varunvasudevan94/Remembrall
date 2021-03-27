@@ -35,3 +35,8 @@ Will use continuos integration and test driven development (I am bad at this, bu
 # Tech Stack
 Front End - expo (cater to all with one code). 
 Server - Rust (rest api) (Hi Ferris!!!)
+
+# Some useful links
+1. https://docs.expo.io/push-notifications/overview/
+2. https://blog.logrocket.com/creating-a-rest-api-in-rust-with-warp/
+(Will add other links later)
