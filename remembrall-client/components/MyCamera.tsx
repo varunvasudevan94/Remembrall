@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+import * as MediaLibrary from 'expo-media-library';
 
 export default function MyCamera() {
   const [hasPermission, setHasPermission] = useState(false);
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const isFocused = useIsFocused();
+  const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  console.log(title);
+  const reset = () => {
+    setImage("");
+    setTitle("");
+  }
+  const pickImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    await MediaLibrary.saveToLibraryAsync(`${result.uri}`);
+    
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -23,31 +42,43 @@ export default function MyCamera() {
   }
   return (
     <View style={styles.container}>
-      {isFocused &&
-        <Camera style={styles.camera} type={type}>
-          <View style={styles.buttonContainer}>
+      <View style={styles.imageContainer}>
+        {image !== "" ?
+          <Image
+            source={{
+              uri: image,
+              method: 'POST',
+              headers: {
+              Pragma: 'no-cache',
+               },
+              body: 'Your Body goes here',
+            }}
+            style={styles.camera}
+          /> : 
+          <TouchableOpacity
+            style={styles.button}
+            onPress={pickImage}
+          >
+            <Text style={styles.buttonText}> Add Image </Text>
+          </TouchableOpacity>
+        }
+        {image !== "" ?
+          <View>
+            <TextInput
+              style={styles.input}
+              value={title}
+              onChangeText={setTitle}
+              placeholder={"Please enter a title"}
+            />
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}>
-              <Text style={styles.text}> Flip </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.saveButton}
-              onPress={() => {
-                console.log("Save this please");
-              }}>
-              <Text style={styles.text}> Save </Text>
-            </TouchableOpacity>
-          </View>
-        </Camera>
-    }
+              onPress={reset}
+            >
+              <Text style={styles.buttonText}> Reset </Text>
+            </TouchableOpacity> 
+          </View>: null
+        }
+      </View>
     </View>
   );
 }
@@ -57,26 +88,35 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   camera: {
-    flex: 1,
+    flex: 0.5,
+    margin: "5%"
   },
-  buttonContainer: {
+  imageContainer: {
     flex: 1,
     backgroundColor: 'transparent',
-    flexDirection: 'row',
+    flexDirection: 'column',
     margin: 20,
   },
   button: {
-    flex: 0.1,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+    height: 60,
+    borderRadius: 5,
+    backgroundColor: "#e83d66",
+    marginTop: 15,
   },
-  saveButton: {
-    flex: 0.8,
-    alignSelf: 'flex-end',
-    alignItems: 'center',
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 24,
+    fontWeight: "bold",
   },
-  text: {
-    fontSize: 18,
-    color: 'white',
+  input: {
+    height: 50,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "#e3e3e3",
+    backgroundColor: "#fff",
   },
 });
