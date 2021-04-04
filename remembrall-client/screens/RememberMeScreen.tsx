@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import MyCamera from '../components/MyCamera';
 
 import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-    </View>
+    <MyCamera />
   );
 }
 
