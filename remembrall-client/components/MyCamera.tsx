@@ -37,6 +37,14 @@ export default function MyCamera() {
               }}>
               <Text style={styles.text}> Flip </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.saveButton}
+              onPress={() => {
+                console.log("Save this please");
+              }}>
+              <Text style={styles.text}> Save </Text>
+            </TouchableOpacity>
           </View>
         </Camera>
     }
@@ -59,6 +67,11 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  saveButton: {
+    flex: 0.8,
     alignSelf: 'flex-end',
     alignItems: 'center',
   },
