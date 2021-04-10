@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ToastAndroid } from 'react-native';
+import { Picker } from '@react-native-community/picker';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
@@ -10,11 +11,14 @@ const swipeSubmit = () => {
   ToastAndroid.show('Reminder Submitted', ToastAndroid.SHORT);
 }
 
+const FREQUENCY = ['Most Frequent Reminders', 'Remind in some time', 'Remind me only tommorow'];
+
 export default function MyCamera() {
   const [hasPermission, setHasPermission] = useState(false);
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
-  console.log(title);
+  const [selectedFrequency, setSelectedFrequency] = useState(FREQUENCY[0]);
+
   const reset = () => {
     setImage("");
     setTitle("");
@@ -50,6 +54,13 @@ export default function MyCamera() {
       <View style={styles.imageContainer}>
         {image !== "" ?
           <View style={styles.container}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={reset}
+            >
+              <Text style={styles.buttonText}> Reset </Text>
+            </TouchableOpacity>
+
             <Image
               source={{
                 uri: image,
@@ -68,19 +79,28 @@ export default function MyCamera() {
               placeholder={"Please enter a title"}
             />
             
+  
+            <View style={styles.input}>
+              <Picker
+                selectedValue={selectedFrequency}
+                mode="dropdown"
+                onValueChange={(itemValue, itemIndex) =>
+                setSelectedFrequency(FREQUENCY[itemIndex])}
+                style={styles.picker}
+              >
+                {FREQUENCY.map(x => <Picker.Item label={x} value={x} key={x} />)}
+              </Picker>
+            </View>
+            
             <SwipeButton
               railBackgroundColor={styles.button.backgroundColor}
               shouldResetAfterSuccess
               onSwipeSuccess={swipeSubmit}
               resetAfterSuccessAnimDelay={1000}
+              title="Swipe to remember"
+              titleColor="white"
+              titleFontSize={20}
             />
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={reset}
-            >
-              <Text style={styles.buttonText}> Reset </Text>
-            </TouchableOpacity>
           </View>
           :
           <View style={styles.container}>
@@ -135,5 +155,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#e3e3e3",
     backgroundColor: "#fff",
+    margin: 10
+  },
+  picker: {
+    color: 'black',
   },
 });
