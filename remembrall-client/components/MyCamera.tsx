@@ -21,7 +21,6 @@ export default function MyCamera() {
       quality: 1,
     });
     await MediaLibrary.saveToLibraryAsync(`${result.uri}`);
-    
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -44,26 +43,18 @@ export default function MyCamera() {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         {image !== "" ?
-          <Image
-            source={{
-              uri: image,
-              method: 'POST',
-              headers: {
-              Pragma: 'no-cache',
-               },
-              body: 'Your Body goes here',
-            }}
-            style={styles.camera}
-          /> : 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={pickImage}
-          >
-            <Text style={styles.buttonText}> Add Image </Text>
-          </TouchableOpacity>
-        }
-        {image !== "" ?
-          <View>
+          <View style={styles.container}>
+            <Image
+              source={{
+                uri: image,
+                method: 'POST',
+                headers: {
+                Pragma: 'no-cache',
+                },
+                body: 'Your Body goes here',
+              }}
+              style={styles.camera}
+            /> 
             <TextInput
               style={styles.input}
               value={title}
@@ -75,8 +66,18 @@ export default function MyCamera() {
               onPress={reset}
             >
               <Text style={styles.buttonText}> Reset </Text>
-            </TouchableOpacity> 
-          </View>: null
+            </TouchableOpacity>
+          </View>
+          :
+          <View style={styles.container}>
+            <View style={{...styles.camera, backgroundColor: 'grey'}} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={pickImage}
+            >
+              <Text style={styles.buttonText}> Add Image </Text>
+            </TouchableOpacity>
+          </View>
         }
       </View>
     </View>
@@ -86,16 +87,17 @@ export default function MyCamera() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    margin: "1%"
   },
   camera: {
     flex: 0.5,
-    margin: "5%"
+    marginBottom: "5%"
   },
   imageContainer: {
     flex: 1,
     backgroundColor: 'transparent',
     flexDirection: 'column',
-    margin: 20,
+    margin: 1,
   },
   button: {
     justifyContent: "center",
