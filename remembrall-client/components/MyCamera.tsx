@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, ToastAndroid } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import * as MediaLibrary from 'expo-media-library';
+import SwipeButton from 'rn-swipe-button';
+
+const swipeSubmit = () => {
+  // Do the async job here
+  ToastAndroid.show('Reminder Submitted', ToastAndroid.SHORT);
+}
 
 export default function MyCamera() {
   const [hasPermission, setHasPermission] = useState(false);
@@ -61,6 +67,14 @@ export default function MyCamera() {
               onChangeText={setTitle}
               placeholder={"Please enter a title"}
             />
+            
+            <SwipeButton
+              railBackgroundColor={styles.button.backgroundColor}
+              shouldResetAfterSuccess
+              onSwipeSuccess={swipeSubmit}
+              resetAfterSuccessAnimDelay={1000}
+            />
+
             <TouchableOpacity
               style={styles.button}
               onPress={reset}
@@ -102,10 +116,11 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    height: 60,
+    height: 50,
     borderRadius: 5,
     backgroundColor: "#e83d66",
     marginTop: 15,
+    margin: 10
   },
   buttonText: {
     color: "#fff",
