@@ -6,7 +6,6 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import { registerForPushNotificationsAsync, Notifications } from './Notifications';
-import {Text} from 'react-native';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -40,7 +39,6 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Navigation colorScheme={colorScheme} />
-        <Text> {expoPushToken} </Text>
         <StatusBar />
       </SafeAreaProvider>
     );
